@@ -1,0 +1,21 @@
+commit a02793f14132145777686b0f63eee30ec4d0f62f
+Author: John Galt <johngaltfirstrun@gmail.com>
+Date:   Fri Aug 16 13:38:48 2024 -0400
+
+    android/config: do not disable hidden api checks on eng
+
+diff --git a/android/config.go b/android/config.go
+index d507e895f..355512feb 100644
+--- a/android/config.go
++++ b/android/config.go
+@@ -157,8 +157,7 @@ func (c Config) RunningInsideUnitTest() bool {
+ // ENABLE_HIDDENAPI_FLAGS=true will be triggered and hiddenapi checks will be considered enabled.
+ func (c Config) DisableHiddenApiChecks() bool {
+   return !c.IsEnvTrue("ENABLE_HIDDENAPI_FLAGS") &&
+-    (c.IsEnvTrue("UNSAFE_DISABLE_HIDDENAPI_FLAGS") ||
+-      Bool(c.productVariables.Eng))
++    c.IsEnvTrue("UNSAFE_DISABLE_HIDDENAPI_FLAGS")
+ }
+ 
+ // DisableVerifyOverlaps returns true if verify_overlaps is skipped.
+
